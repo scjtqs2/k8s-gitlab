@@ -1,0 +1,103 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: gitlab
+  namespace: gitlab
+  labels:
+    k8s.kuboard.cn/name: gitlab
+  annotations:
+    k8s.kuboard.cn/displayName: gitlab-ce版本
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s.kuboard.cn/name: gitlab
+  template:
+    metadata:
+      labels:
+        k8s.kuboard.cn/name: gitlab
+    spec:
+      # TODO 文件挂载地址修改成你自己的方式 这里以nfs为demo
+      volumes:
+        - name: volume-data
+          nfs:
+            server: 10.0.0.10
+            path: /data/share/k8s/gitlab
+      containers:
+        - name: gitlab
+          image: 'yrzr/gitlab-ce-arm64v8:15.4.5-ce.0'
+          ports:
+            - name: ssh
+              containerPort: 22
+              protocol: TCP
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: https
+              containerPort: 443
+              protocol: TCP
+          envFrom:
+            - prefix: GITLAB_OMNIBUS_CONFIG
+              configMapRef:
+                name: gitlab-omnibus-config
+          env:
+            - name: TZ
+              value: Asia/Shanghai
+          resources:
+            requests:
+              memory: 4Gi
+          volumeMounts:
+            - name: volume-data
+              mountPath: /etc/gitlab
+              subPath: config
+            - name: volume-data
+              mountPath: /var/log/gitlab
+              subPath: log
+            - name: volume-data
+              mountPath: /var/opt/gitlab
+              subPath: data
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: { }
+      affinity: { }
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: gitlab
+  namespace: gitlab
+  labels:
+    k8s.kuboard.cn/name: gitlab
+spec:
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 443
+  selector:
+    k8s.kuboard.cn/name: gitlab
+  type: ClusterIP
+  sessionAffinity: None
+  ipFamilies:
+    - IPv4
+    - IPv6
+  ipFamilyPolicy: PreferDualStack
+  internalTrafficPolicy: Cluster
