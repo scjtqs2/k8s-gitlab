@@ -34,9 +34,6 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
-            - name: https
-              containerPort: 443
-              protocol: TCP
           envFrom:
             - prefix: GITLAB_OMNIBUS_CONFIG
               configMapRef:

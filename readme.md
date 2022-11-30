@@ -12,6 +12,18 @@
    1. 修改 `config.yaml`中域名和邮件配置。
    2. 修改 `deployment-amd64.yaml` for amd64 或者 `deployment-arm64.yaml` for arm64 中的目录挂载配置。demo里面是nfs的挂载样例。
    3. 修改 `ingress.yaml` 中的'cert-manager注册'部分 和 域名
+   4. 安装：
+   ```shell
+   cd gitlab
+   kubectl create namespace gitlab
+   kubectl apply -f config.yaml  
+   kubectl apply -f service.yaml  
+   kubectl apply -f ingress.yaml
+   ## only for x86-64  
+   kubectl apply -f deployment-amd64.yaml
+   ## only for arm64
+   kubectl apply -f deployment-arm64.yaml
+   ```
 2. `runner`: gitlab的 runner服务
    1. 修改 `values.yaml` 中的`runnerRegistrationToken` 为你 gitlab后台的token。
    2. 安装方法：`bash install.sh` 
