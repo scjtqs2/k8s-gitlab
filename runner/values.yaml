@@ -1,0 +1,21 @@
+# 配置参考 https://gitlab.com/gitlab-org/charts/gitlab-runner/-/blob/v0.45.2/values.yaml
+image:
+  registry: docker.io
+  image: gitlab/gitlab-runner
+  tag: alpine-v15.4.2
+#image: gitlab/gitlab-runner:ubuntu-v14.10.1
+imagePullPolicy: IfNotPresent
+gitlabUrl: http://gitlab                                   # gitlab 的访问地址 不改也行，走内网gitlab的service
+runnerRegistrationToken: "xxxxxxxxxx"                      # gitlab对应的 token
+runners:
+  privileged: true
+  namespace: gitlab
+  helpers:
+    image: alpinelinux/gitlab-runner-helper:latest
+  config: |
+    [[runners]]
+      [runners.kubernetes]
+        image = "ubuntu:20.04"
+        imagePullPolicy = "if-not-present"
+        helper_image = "alpinelinux/gitlab-runner-helper:latest"
+        helper_cpu_limit = "200m"

@@ -6,7 +6,7 @@ metadata:
   namespace: gitlab
 data:
   GITLAB_OMNIBUS_CONFIG: >
-    external_url 'https://gitlab.example.com'
+    external_url 'https://gitlab.example.com'            # 你的对外域名，可以带端口
 
     gitlab_rails['gitlab_shell_ssh_port'] = 31524
 
@@ -16,8 +16,7 @@ data:
 
     gitlab_rails['smtp_address'] = "smtp.ym.163.com"  # 【163邮件服务器地址】
 
-    gitlab_rails['smtp_port'] = 994 # 启用的端口
-    ，有人写的是25，但是阿里的会禁用，会报错，所以建议是465，还需要去服务器开启安全策略配置端口
+    gitlab_rails['smtp_port'] = 994 # 启用的端口，有人写的是25，但是阿里的会禁用，会报错，所以建议是465，还需要去服务器开启安全策略配置端口
 
     gitlab_rails['smtp_user_name'] = 'service@example.com'
 
@@ -33,8 +32,19 @@ data:
 
     gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
 
-    gitlab_rails['gitlab_email_from'] = 'service@example.com' # 发件人邮箱 
-    还有个配置是抄送人邮箱地址，
+    gitlab_rails['gitlab_email_from'] = 'service@example.com' # 发件人邮箱  还有个配置是抄送人邮箱地址，
 
     user['git_user_email'] = "service@example.com"  # 校验什么什么的邮箱 必须和上一个一样
+    
+    # 去掉letsencrypt的证书
+
+    letsencrypt['enable'] = false
+    
+    nginx['real_ip_header'] = 'X-Forwarded-For'
+    
+    nginx['real_ip_recursive'] = 'on'
+    
+    nginx['listen_port'] = 80
+
+    nginx['listen_https'] = false
 
