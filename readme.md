@@ -15,7 +15,7 @@
    4. 安装：
    ```shell
    cd gitlab
-   kubectl create namespace gitlab
+   kubectl apply -f namespace.yaml
    kubectl apply -f config.yaml  
    kubectl apply -f service.yaml  
    kubectl apply -f ingress.yaml
