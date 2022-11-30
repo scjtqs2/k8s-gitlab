@@ -15,7 +15,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: gitlab.mobyds.com
+    - host: gitlab.example.com  # 改成你自己的域名
       http:
         paths:
           - path: /
@@ -27,5 +27,5 @@ spec:
                   number: 80
   tls:
     - hosts:
-        - gitlab.mobyds.com
+        - gitlab.example.com   # 改成你自己的域名
       secretName: gitlab-tls
