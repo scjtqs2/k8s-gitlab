@@ -35,8 +35,7 @@ spec:
               containerPort: 80
               protocol: TCP
           envFrom:
-            - prefix: GITLAB_OMNIBUS_CONFIG
-              configMapRef:
+            - configMapRef:
                 name: gitlab-omnibus-config
           env:
             - name: TZ
