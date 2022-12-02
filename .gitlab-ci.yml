@@ -12,7 +12,7 @@ variables:
 mergefromgithub: # This job runs in the build stage, which runs first.
   stage: mergefromgithub
   before_script:
-    - 'which ssh-agent || ( apt-get update -qy && apt-get install openssh-client -qqy )'
+    - 'which ssh-agent || ( apt-get update -qy && apt-get install openssh-client git -qqy )'
     - eval $(ssh-agent -s)
     - echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null # add ssh ke
     - mkdir -p ~/.ssh
