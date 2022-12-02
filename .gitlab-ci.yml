@@ -11,7 +11,7 @@ variables:
 mergefromgithub: # This job runs in the build stage, which runs first.
   stage: mergefromgithub
   before_script:
-    - 'which ssh-agent || ( apt-get update -qy && apt-get install openssh-client git -qqy )'
+    - 'which ssh-agent || ( apt-get update -qy && apt-get install openssh-client  -qqy )'
     - eval $(ssh-agent -s)
     - echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null # add ssh ke
     - mkdir -p ~/.ssh
@@ -20,6 +20,7 @@ mergefromgithub: # This job runs in the build stage, which runs first.
     - git config --global user.email "${GITLAB_USER_EMAIL}"
     - git config --global user.name "${GITLAB_USER_NAME}"
   script:
+    - 'which git || ( apt-get update -qy && apt-get install git -qqy )'
     - echo "add upstream"
     - git remote add upstream $GITHUB_REPO
     - echo "remote -v"
@@ -27,7 +28,7 @@ mergefromgithub: # This job runs in the build stage, which runs first.
     - echo "fetch upstream"
     - git fetch upstream
     - echo "check main branch"
-    - git checkout ${MAIN_BRANCH}
+    - git checkout origin/${MAIN_BRANCH}
     - echo "merge upstream"
     - git merge upstream/${MAIN_BRANCH}
     - echo "push"
