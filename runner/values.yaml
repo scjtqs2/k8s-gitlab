@@ -28,3 +28,13 @@ runners:
         imagePullPolicy = "if-not-present"
         helper_image = "querycap/gitlab-runner-helper:14.8.0"
         helper_cpu_limit = "200m"
+hostAliases: []
+  # Example:
+  # - ip: "127.0.0.1"
+  #   hostnames:
+  #   - "foo.local"
+  #   - "bar.local"
+  # - ip: "10.1.2.3"
+  #   hostnames:
+  #   - "foo.remote"
+  #   - "bar.remote"
