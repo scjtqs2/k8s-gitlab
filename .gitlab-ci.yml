@@ -3,7 +3,7 @@
 ## 2.SSH_PUBLIC_KEY  对应账号gitlab的公钥
 stages: # List of stages for jobs, and their order of execution
   - mergefromgithub
-    
+
 variables:
   GITHUB_REPO: "https://github.com/scjtqs2/k8s-gitlab.git"
   MAIN_BRANCH: "main"
@@ -13,11 +13,10 @@ mergefromgithub: # This job runs in the build stage, which runs first.
   stage: mergefromgithub
   before_script:
     - 'which ssh-agent || ( apt-get update -qy && apt-get install openssh-client -qqy )'
-    - eval `ssh-agent -s`
+    - eval $(ssh-agent -s)
     - echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null # add ssh ke
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - echo "${SSH_PUBLIC_KEY}" >> ~/.ssh/id_rsa.pub
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
     - git config --global user.email "${GITLAB_USER_EMAIL}"
     - git config --global user.name "${GITLAB_USER_NAME}"

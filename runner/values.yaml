@@ -5,17 +5,26 @@ image:
   tag: alpine-v15.4.2
 #image: gitlab/gitlab-runner:ubuntu-v14.10.1
 imagePullPolicy: IfNotPresent
+replicas: 1                                                # 允许的数量
 gitlabUrl: http://gitlab                                   # gitlab 的访问地址 不改也行，走内网gitlab的service
 runnerRegistrationToken: "xxxxxxxxxx"                      # gitlab对应的 token
+rbac:
+  create: true
+  rules:
+    - apiGroups: ["*"]
+  clusterWideAccess: true
 runners:
   privileged: true
   namespace: gitlab
-  helpers:
-    image: alpinelinux/gitlab-runner-helper:latest
+#  helpers:
+#    image: alpinelinux/gitlab-runner-helper:latest
+  nodeSelector: {}                                          # node机器绑定参数。需要的话自行添加
+  #    kubernetes.io/arch: arm64                            # node选择参数的demo，绑定arm64的机器
+  nodeTolerations: {}                                       # node机器绑定参数。需要的话自行添加
   config: |
     [[runners]]
       [runners.kubernetes]
         image = "ubuntu:20.04"
         imagePullPolicy = "if-not-present"
-        helper_image = "alpinelinux/gitlab-runner-helper:latest"
+        helper_image = "querycap/gitlab-runner-helper:14.8.0"
         helper_cpu_limit = "200m"
