@@ -17,7 +17,7 @@
    cd gitlab
    kubectl apply -f namespace.yaml
    kubectl apply -f config.yaml  
-   kubectl apply -f service.yaml  
+   kubectl apply -f service.yaml  # 如果你的k8s集群是双栈的，同时支持ipv4和ipv6,安装 `service_with_ipv6.yaml` 吧。
    kubectl apply -f ingress.yaml
    ## only for x86-64  
    kubectl apply -f deployment-amd64.yaml

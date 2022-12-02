@@ -22,7 +22,8 @@ spec:
   sessionAffinity: None
   ipFamilies:
     - IPv4
-  ipFamilyPolicy: SingleStack
+    - IPv6
+  ipFamilyPolicy: PreferDualStack
   internalTrafficPolicy: Cluster
 
 ---
@@ -46,4 +47,5 @@ spec:
   sessionAffinity: None
   ipFamilies:
     - IPv4
-  ipFamilyPolicy: SingleStack
+    - IPv6
+  ipFamilyPolicy: PreferDualStack
