@@ -28,6 +28,7 @@ runners:
         imagePullPolicy = "if-not-present"
         helper_image = "querycap/gitlab-runner-helper:14.8.0"
         helper_cpu_limit = "200m"
+nodeSelector: {}                                             # node机器绑定参数。需要的话自行添加 全局
 hostAliases: []
   # Example:
   # - ip: "127.0.0.1"
