@@ -16,8 +16,7 @@ rbac:
 runners:
   privileged: true
   namespace: gitlab
-#  helpers:
-#    image: alpinelinux/gitlab-runner-helper:latest
+  cloneUrl: http://gitlab
   nodeSelector: {}                                          # node机器绑定参数。需要的话自行添加
   #    kubernetes.io/arch: arm64                            # node选择参数的demo，绑定arm64的机器
   nodeTolerations: {}                                       # node机器绑定参数。需要的话自行添加
