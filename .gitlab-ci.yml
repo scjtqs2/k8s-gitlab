@@ -1,12 +1,13 @@
-## 需要准备的全局变量
+## 需要准备的全局变量，gitlab后台配置全局变量，一次配置，所有项目都能吃上。
 ## 1.SSH_PRIVATE_KEY 对应账号gitlab的私钥
 stages: # List of stages for jobs, and their order of execution
   - mergefromgithub
 
+# 需要手动添加的局部变量，每个项目都不一样。
 variables:
-  GITHUB_REPO: "https://github.com/scjtqs2/k8s-gitlab.git"
-  MAIN_BRANCH: "main"
-  GITLAB_URL: "gitlab"
+  GITHUB_REPO: "https://github.com/scjtqs2/k8s-gitlab.git"                                # 改成你实际项目的上游地址
+  MAIN_BRANCH: "main"                                                                     # 要同步的分支名
+  GITLAB_URL: "gitlab"                                                                    # gitlab runner 内部连 gitlab的地址
 
 mergefromgithub: # This job runs in the build stage, which runs first.
   stage: mergefromgithub

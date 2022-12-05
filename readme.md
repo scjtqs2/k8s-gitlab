@@ -1,4 +1,6 @@
 # gitlab-ce 的docker镜像 跑在k8s上
+> 支持 x86_64 和 arm64 
+> 
 
 ## 初始密码
 > 用户名 `root`
@@ -28,3 +30,5 @@
    1. 修改 `values.yaml` 中的`runnerRegistrationToken` 为你 gitlab后台的token。
    2. 安装方法：`bash install.sh` 
    3. 卸载方法：`bash uninstall.sh`
+
+3. `.gitlab-ci.yml`: github的项目自动同步到gitlab-ce的配置demo，需要自行手动在项目内配置定时任务。定时任务的配置不在ci文件中。
