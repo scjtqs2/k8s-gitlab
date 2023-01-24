@@ -70,30 +70,30 @@ spec:
   revisionHistoryLimit: 10
   progressDeadlineSeconds: 600
 
----
-kind: Service
-apiVersion: v1
-metadata:
-  name: gitlab
-  namespace: gitlab
-  labels:
-    k8s.kuboard.cn/name: gitlab
-spec:
-  ports:
-    - name: http
-      protocol: TCP
-      port: 80
-      targetPort: 80
-    - name: https
-      protocol: TCP
-      port: 443
-      targetPort: 443
-  selector:
-    k8s.kuboard.cn/name: gitlab
-  type: ClusterIP
-  sessionAffinity: None
-  ipFamilies:
-    - IPv4
-    - IPv6
-  ipFamilyPolicy: PreferDualStack
-  internalTrafficPolicy: Cluster
+# ---
+# kind: Service
+# apiVersion: v1
+# metadata:
+#   name: gitlab
+#   namespace: gitlab
+#   labels:
+#     k8s.kuboard.cn/name: gitlab
+# spec:
+#   ports:
+#     - name: http
+#       protocol: TCP
+#       port: 80
+#       targetPort: 80
+#     - name: https
+#       protocol: TCP
+#       port: 443
+#       targetPort: 443
+#   selector:
+#     k8s.kuboard.cn/name: gitlab
+#   type: ClusterIP
+#   sessionAffinity: None
+#   ipFamilies:
+#     - IPv4
+#     - IPv6
+#   ipFamilyPolicy: PreferDualStack
+#   internalTrafficPolicy: Cluster
